@@ -180,6 +180,13 @@ class ActionsInvoiceslate
 	}
 
 
+	/**
+	 * Affichage d'un encadré rouge avec les détails des factures impayées si facture en retard de réglement
+	 *
+	 * @param $parameters
+	 * @param $object
+	 * @param $action
+	 */
 	public function formObjectOptions($parameters, $object, $action){
 		global $conf, $user, $langs, $db;
 
@@ -217,6 +224,13 @@ class ActionsInvoiceslate
 	}
 
 
+	/**
+	 *  Ajouter une "tuile" indiquant les informations sur les factures impayées d'un client, dans la fiche client
+	 *
+	 * @param $parameters
+	 * @param $object
+	 * @param $action
+	 */
 	public function addMoreBoxStatsCustomer($parameters, &$object, &$action)
 	{
 		global $conf, $user, $langs, $db;
