@@ -101,7 +101,7 @@ class modInvoiceslate extends DolibarrModules
 				'/invoiceslate/js/invoiceslate.js.php',
 			),
 			// Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
-			'hooks' => array('invoicecard','thirdpartydao'),
+			'hooks' => array('invoicecard','thirdpartydao', 'thirdpartycomm'),
 			// Set this to 1 if features of module are opened to external users
 			'moduleforexternal' => 0,
 		);
