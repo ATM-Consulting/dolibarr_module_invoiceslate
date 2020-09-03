@@ -28,6 +28,9 @@ ModuleInvoiceslateDesc = Description de Invoiceslate
 InvoiceslateSetup = Configuration du module Invoiceslate
 Settings = Réglages
 InvoiceslateSetupPage = Page de configuration du module Invoiceslate
+INVOICESLATE_ADD_LAST_ORDER_BADGE = Ajouter un indicateur visuel (bagde) sur le mon du tiers pour savoir s'il a commandé récemment.
+InvoiceLateBadgeColorInfo =Infos couleur du badge :<br/> - 0 à 3 mois dernières ventes / bleu<br/>- 3 à 6 dernières ventes / gris<br/>- Plus de 6 mois dernières ventes / rouge<br/><br/>Le chiffre dans le badge correspond au nombres de mois revolu depuis la dernière commande valide.
+
 
 #
 # Page À propos

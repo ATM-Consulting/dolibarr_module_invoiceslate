@@ -80,7 +80,7 @@ class ActionsInvoiceslate
 	function getNomUrl($parameters, &$object, &$action, $hookmanager)
 	{
 		if($object->element == 'societe' && empty($parameters['option'])){
-			global $langs;
+			global $langs, $conf;
 			$langs->load('bills');
 			$langs->load('invoiceslate@invoiceslate');
 			$dataClient = $this->_getDataClient($object->id);
@@ -119,7 +119,7 @@ class ActionsInvoiceslate
 				$this->resprints = $dom->saveHTML();
 
 				// last Order badge
-				if($dataClient->last_order){
+				if($dataClient->last_order && !empty($conf->global->INVOICESLATE_ADD_LAST_ORDER_BADGE)){
 
 					$now = new DateTime();
 					$last_order = new DateTime();
@@ -134,6 +134,7 @@ class ActionsInvoiceslate
 						$badgeClass = "badge-info";
 					}
 
+					$title.= '<br/>'.$langs->trans('InvoiceLateBadgeColorInfo');
 					$this->resprints.= '<span style="margin-left:5px;" class="classfortooltip badge badge '.$badgeClass.'" title="'.dol_htmlentities($title, ENT_QUOTES).'" ><small>'.$nbMonth.'</small></span>';
 				}
 				return 1;
