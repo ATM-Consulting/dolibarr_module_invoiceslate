@@ -36,13 +36,4 @@ About = À propos
 InvoiceslateAbout = À propos de Invoiceslate
 InvoiceslateAboutPage = Page à propos de Invoiceslate
 
-#
-# Page d'exemple
-#
-MyPageName = Nom de ma page
-
-#
-# Box d'exemple
-#
-MyWidget = Mon widget
-MyWidgetDescription = Description de mon widget
+LastOrder = Dernière commande
