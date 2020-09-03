@@ -128,13 +128,13 @@ class ActionsInvoiceslate
 					$nbMonth = intval($interval->format('%r%m'));
 					$badgeClass = "badge-primary";
 					if($nbMonth < -6){
-						$badgeClass = "badge-warning";
+						$badgeClass = "badge-danger";
 					}
 					elseif($nbMonth < -3){
 						$badgeClass = "badge-info";
 					}
 
-					$this->resprints.= '<span class="classfortooltip badge '.$badgeClass.'" title="'.dol_htmlentities($title, ENT_QUOTES).'" >'.$nbMonth.'</span>';
+					$this->resprints.= '<span style="margin-left:5px;" class="classfortooltip badge badge '.$badgeClass.'" title="'.dol_htmlentities($title, ENT_QUOTES).'" ><small>'.$nbMonth.'</small></span>';
 				}
 				return 1;
 			}
