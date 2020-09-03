@@ -144,6 +144,34 @@ class ActionsInvoiceslate
 	}
 
 
+	public function formObjectOptions($parameters, $object, $action){
+		global $conf, $user, $langs, $db;
+
+		$contextArray = explode(':',$parameters['context']);
+		$langs->load('invoiceslate@invoiceslate');
+
+		if (in_array('invoicecard', $contextArray ) && !empty($object))
+		{
+			if($object->element == 'facture' && $action = 'create') {
+				print '<script type="text/javascript" language="javascript">
+					$(document).ready(function() {
+					var test = $("#socid");
+					var line = test.parent();
+					line.append("<div id=block></div>");
+
+					$(test).on("change", function () {
+						var optionValue = $(this).children("option:selected").val();
+						var line = test.parent();
+
+						$("#block").load( "http://localhost/kevin/kevin/htdocs/comm/card.php?socid=" + optionValue + " #customer-unpaid-boxstats" );
+					});
+				});
+					</script>';
+			}
+		}
+	}
+
+
 	public function addMoreBoxStatsCustomer($parameters, &$object, &$action)
 	{
 		global $conf, $user, $langs, $db;
@@ -155,9 +183,8 @@ class ActionsInvoiceslate
 		{
 			if($object->element == 'societe'){
 				$dataClient = $this->_getDataClient($object->id);
+
 				if($dataClient) {
-					if($dataClient->total_unpaid>0)
-					{
 						$icon = 'bill';
 						$text = $langs->trans("Unpaid");
 						$boxstat = '<div id="customer-unpaid-boxstats" class="boxstats" data-unpaid="'.$dataClient->total_unpaid.'"  title="'.dol_escape_htmltag($text).'" >';
@@ -166,7 +193,6 @@ class ActionsInvoiceslate
 						$boxstat .= '</div>';
 
 						$this->resprints = $boxstat;
-					}
 				}
 			}
 		}

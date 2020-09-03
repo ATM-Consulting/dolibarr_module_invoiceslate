@@ -63,10 +63,8 @@ $langs->loadLangs(array("invoiceslate@invoiceslate","other"));
 
 /* Javascript library of module Invoiceslate */
 $(document).ready(function() {
-	var line = $("tbody").children().eq(2);
-	console.log(line)
-	var divThirdParty = line.children()[1];
-	$('.alert').css("display", "inline-block").show().appendTo(divThirdParty);
+
+
 
 });
 
