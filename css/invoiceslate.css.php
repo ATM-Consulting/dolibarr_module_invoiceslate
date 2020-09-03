@@ -70,32 +70,32 @@ else header('Cache-Control: no-cache');
 
 ?>
 
-/* The alert message box */
-.alert {
-	display: none;
-	padding: 20px;
-	margin-left: 25px;
-	background-color: #f44336; /* Red */
-	color: white;
-	margin-bottom: 15px;
-	width: 25%;
+#invoiceslate-load-container{
+	display: inline-block;
+	position: relative;
 }
 
-/* The close button */
-.closebtn {
-	margin-left: 15px;
-	color: white;
-	font-weight: bold;
-	float: right;
-	font-size: 22px;
-	line-height: 20px;
-	cursor: pointer;
-	transition: 0.3s;
+.boxstats.--invoiceslate-alert{
+	display: block;
+	position: absolute;
+	left:0px;
+	top:-20px;
+	background-color: #950000;
+	border: none ;
+	color: #fff;
+	box-shadow: 1px 1px 5px rgba(0,0,0,.7);
+}
+.boxstats.--invoiceslate-alert .boxstatstext,
+.boxstats.--invoiceslate-alert .amountremaintopay,
+.boxstats.--invoiceslate-alert .infobox-propal,
+.boxstats.--invoiceslate-alert .infobox-facture,
+.boxstats.--invoiceslate-alert .infobox-commande
+{
+	color: #fff !important;
+	opacity: 1;
 }
 
-/* When moving the mouse over the close button */
-.closebtn:hover {
-	color: black;
+.boxstats.--invoiceslate-no-display{
+	display: none !important;
 }
-
 

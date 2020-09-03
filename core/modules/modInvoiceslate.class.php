@@ -98,7 +98,7 @@ class modInvoiceslate extends DolibarrModules
 			),
 			// Set this to relative path of js file if module must load a js on all pages
 			'js' => array(
-				'/invoiceslate/js/invoiceslate.js.php',
+//				'/invoiceslate/js/invoiceslate.js.php',
 			),
 			// Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
 			'hooks' => array('invoicecard','thirdpartydao', 'thirdpartycomm'),
@@ -255,6 +255,100 @@ class modInvoiceslate extends DolibarrModules
 
 		// Main menu entries to add
 		$this->menu = array();
+		$r = 0;
+		// Add here entries to declare new menus
+		/* BEGIN MODULEBUILDER TOPMENU */
+//		$this->menu[$r++] = array(
+//			'fk_menu'=>'', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+//			'type'=>'top', // This is a Top menu entry
+//			'titre'=>'ModuleInvoiceslateName',
+//			'mainmenu'=>'invoiceslate',
+//			'leftmenu'=>'',
+//			'url'=>'/invoiceslate/invoiceslateindex.php',
+//			'langs'=>'invoiceslate@invoiceslate', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+//			'position'=>1000 + $r,
+//			'enabled'=>'$conf->invoiceslate->enabled', // Define condition to show or hide menu entry. Use '$conf->invoiceslate->enabled' if entry must be visible if module is enabled.
+//			'perms'=>'1', // Use 'perms'=>'$user->rights->invoiceslate->myobject->read' if you want your menu with a permission rules
+//			'target'=>'',
+//			'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
+//		);
+		/* END MODULEBUILDER TOPMENU */
+		/* BEGIN MODULEBUILDER LEFTMENU MYOBJECT
+		$this->menu[$r++]=array(
+			'fk_menu'=>'fk_mainmenu=invoiceslate',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'type'=>'left',                          // This is a Top menu entry
+			'titre'=>'MyObject',
+			'mainmenu'=>'invoiceslate',
+			'leftmenu'=>'myobject',
+			'url'=>'/invoiceslate/invoiceslateindex.php',
+			'langs'=>'invoiceslate@invoiceslate',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'position'=>1000+$r,
+			'enabled'=>'$conf->invoiceslate->enabled',  // Define condition to show or hide menu entry. Use '$conf->invoiceslate->enabled' if entry must be visible if module is enabled.
+			'perms'=>'$user->rights->invoiceslate->myobject->read',			                // Use 'perms'=>'$user->rights->invoiceslate->level1->level2' if you want your menu with a permission rules
+			'target'=>'',
+			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
+		);
+		$this->menu[$r++]=array(
+			'fk_menu'=>'fk_mainmenu=invoiceslate,fk_leftmenu=myobject',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'type'=>'left',			                // This is a Left menu entry
+			'titre'=>'List MyObject',
+			'mainmenu'=>'invoiceslate',
+			'leftmenu'=>'invoiceslate_myobject_list',
+			'url'=>'/invoiceslate/myobject_list.php',
+			'langs'=>'invoiceslate@invoiceslate',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'position'=>1000+$r,
+			'enabled'=>'$conf->invoiceslate->enabled',  // Define condition to show or hide menu entry. Use '$conf->invoiceslate->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'perms'=>'$user->rights->invoiceslate->myobject->read',			                // Use 'perms'=>'$user->rights->invoiceslate->level1->level2' if you want your menu with a permission rules
+			'target'=>'',
+			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
+		);
+		$this->menu[$r++]=array(
+			'fk_menu'=>'fk_mainmenu=invoiceslate,fk_leftmenu=myobject',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'type'=>'left',			                // This is a Left menu entry
+			'titre'=>'New MyObject',
+			'mainmenu'=>'invoiceslate',
+			'leftmenu'=>'invoiceslate_myobject_new',
+			'url'=>'/invoiceslate/myobject_card.php?action=create',
+			'langs'=>'invoiceslate@invoiceslate',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'position'=>1000+$r,
+			'enabled'=>'$conf->invoiceslate->enabled',  // Define condition to show or hide menu entry. Use '$conf->invoiceslate->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'perms'=>'$user->rights->invoiceslate->myobject->write',			                // Use 'perms'=>'$user->rights->invoiceslate->level1->level2' if you want your menu with a permission rules
+			'target'=>'',
+			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
+		);
+		END MODULEBUILDER LEFTMENU MYOBJECT */
+
+		// Exports profiles provided by this module
+		$r = 1;
+		/* BEGIN MODULEBUILDER EXPORT MYOBJECT */
+		/*
+		$langs->load("invoiceslate@invoiceslate");
+		$this->export_code[$r]=$this->rights_class.'_'.$r;
+		$this->export_label[$r]='MyObjectLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
+		$this->export_icon[$r]='myobject@invoiceslate';
+		// Define $this->export_fields_array, $this->export_TypeFields_array and $this->export_entities_array
+		$keyforclass = 'MyObject'; $keyforclassfile='/invoiceslate/class/myobject.class.php'; $keyforelement='myobject@invoiceslate';
+		include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
+		//$this->export_fields_array[$r]['t.fieldtoadd']='FieldToAdd'; $this->export_TypeFields_array[$r]['t.fieldtoadd']='Text';
+		//unset($this->export_fields_array[$r]['t.fieldtoremove']);
+		//$keyforclass = 'MyObjectLine'; $keyforclassfile='/invoiceslate/class/myobject.class.php'; $keyforelement='myobjectline@invoiceslate'; $keyforalias='tl';
+		//include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
+		$keyforselect='myobject'; $keyforaliasextra='extra'; $keyforelement='myobject@invoiceslate';
+		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
+		//$keyforselect='myobjectline'; $keyforaliasextra='extraline'; $keyforelement='myobjectline@invoiceslate';
+		//include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
+		//$this->export_dependencies_array[$r] = array('myobjectline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
+		//$this->export_special_array[$r] = array('t.field'=>'...');
+		//$this->export_examplevalues_array[$r] = array('t.field'=>'Example');
+		//$this->export_help_array[$r] = array('t.field'=>'FieldDescHelp');
+		$this->export_sql_start[$r]='SELECT DISTINCT ';
+		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'myobject as t';
+		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'myobject_line as tl ON tl.fk_myobject = t.rowid';
+		$this->export_sql_end[$r] .=' WHERE 1 = 1';
+		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('myobject').')';
+		$r++; */
+		/* END MODULEBUILDER EXPORT MYOBJECT */
+
 
 	}
 

@@ -65,6 +65,41 @@ class ActionsInvoiceslate
 		$this->db = $db;
 	}
 
+	/**
+	 * @param	array			$parameters		Array of parameters
+	 * @param	CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
+	 * @param	string			$action      	'add', 'update', 'view'
+	 *
+	 * @return	int         					<0 if KO,
+	 *                           				=0 if OK but we want to process standard actions too,
+	 *                            				>0 if OK and we want to replace standard actions.
+	 */
+	function doActions($parameters, &$object, &$action, $hookmanager)
+	{
+		global $langs, $conf;
+
+		$contextArray = explode(':',$parameters['context']);
+
+		if (in_array('invoicecard', $contextArray )) {
+			if (!empty($conf->global->INVOICESLATE_ADD_ALERT_UNPAID_INVOICE_CREATION)) {
+				if ($object->element == 'facture' && $action == 'create') {
+					/** @var Facture $object */
+
+					$langs->load('invoiceslate@invoiceslate');
+					$socid = GETPOST('socid');
+					$dataClient = $this->_getDataClient($socid);
+					if ($dataClient) {
+						// Unpaid
+						if ($dataClient->total_unpaid > 0) {
+							setEventMessage($langs->trans('Unpaid') . ' : ' . price($dataClient->total_unpaid), 'errors');
+						}
+					}
+				}
+			}
+		}
+
+		return 0;
+	}
 
 	/**
 	 * Affichage en rouge et gras du nom du tiers si impayé en retard
@@ -145,6 +180,57 @@ class ActionsInvoiceslate
 	}
 
 
+	/**
+	 * Affichage d'un encadré rouge avec les détails des factures impayées si facture en retard de réglement
+	 *
+	 * @param $parameters
+	 * @param $object
+	 * @param $action
+	 */
+	public function formObjectOptions($parameters, $object, $action){
+		global $conf, $user, $langs, $db;
+
+		$contextArray = explode(':',$parameters['context']);
+		$langs->load('invoiceslate@invoiceslate');
+
+		if (in_array('invoicecard', $contextArray ) && !empty($object))
+		{
+			if($object->element == 'facture' && $action = 'create') {
+				print '<script type="text/javascript" language="javascript">
+					$(document).ready(function() {
+					var socId = $("#socid");
+					var line = socId.parent();
+					line.append(\'<div id="invoiceslate-load-container"></div>\');
+
+					$(socId).on("change", function () {
+						var optionValue = $(this).children("option:selected").val();
+						var line = socId.parent();
+						$("#invoiceslate-load-container").load("'.dol_buildpath('comm/card.php',1).'?socid=" + optionValue + " #customer-unpaid-boxstats", function() {
+						  	var unpaidInvoices = $("#customer-unpaid-boxstats").attr("data-unpaid");
+							if(unpaidInvoices>0){
+							    $("#customer-unpaid-boxstats").addClass("--invoiceslate-alert");
+							}
+							else{
+							     $("#customer-unpaid-boxstats").addClass("--invoiceslate-no-display");
+							}
+						});
+
+
+					});
+				});
+					</script>';
+			}
+		}
+	}
+
+
+	/**
+	 *  Ajouter une "tuile" indiquant les informations sur les factures impayées d'un client, dans la fiche client
+	 *
+	 * @param $parameters
+	 * @param $object
+	 * @param $action
+	 */
 	public function addMoreBoxStatsCustomer($parameters, &$object, &$action)
 	{
 		global $conf, $user, $langs, $db;
@@ -156,9 +242,8 @@ class ActionsInvoiceslate
 		{
 			if($object->element == 'societe'){
 				$dataClient = $this->_getDataClient($object->id);
+
 				if($dataClient) {
-					if($dataClient->total_unpaid>0)
-					{
 						$icon = 'bill';
 						$text = $langs->trans("Unpaid");
 						$boxstat = '<div id="customer-unpaid-boxstats" class="boxstats" data-unpaid="'.$dataClient->total_unpaid.'"  title="'.dol_escape_htmltag($text).'" >';
@@ -167,7 +252,6 @@ class ActionsInvoiceslate
 						$boxstat .= '</div>';
 
 						$this->resprints = $boxstat;
-					}
 				}
 			}
 		}
@@ -188,6 +272,8 @@ class ActionsInvoiceslate
 		global $db, $INVOICESLATE_CACHE_getDataClient;
 
 		$fk_soc = intval($fk_soc);
+
+		if(empty($fk_soc)) return false;
 
 		if($useCache && isset($INVOICESLATE_CACHE_getDataClient[$fk_soc])) return $INVOICESLATE_CACHE_getDataClient[$fk_soc];
 

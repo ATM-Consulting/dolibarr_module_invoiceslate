@@ -110,6 +110,7 @@ if(!function_exists('setup_print_title')){
 setup_print_title("Parameters");
 
 setup_print_on_off('INVOICESLATE_ADD_LAST_ORDER_BADGE', false, '', 'InvoiceLateBadgeColorInfo');
+setup_print_on_off('INVOICESLATE_ADD_ALERT_UNPAID_INVOICE_CREATION');
 
 
 
