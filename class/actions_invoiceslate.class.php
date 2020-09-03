@@ -79,7 +79,7 @@ class ActionsInvoiceslate
 	 */
 	function getNomUrl($parameters, &$object, &$action, $hookmanager)
 	{
-		if($object->element == 'societe') {
+		if($object->element == 'societe' && empty($parameters['option'])){
 			global $langs;
 			$langs->load('bills');
 			$langs->load('invoiceslate@invoiceslate');
@@ -89,7 +89,7 @@ class ActionsInvoiceslate
 				$dom = new DOMDocument();
 				@$dom->loadHTML (mb_convert_encoding($parameters['getnomurl'], 'HTML-ENTITIES', "UTF-8"));
 				$links = $dom->getElementsByTagName ( 'a');
-
+				$title = '';
 				foreach ($links as $link){
 
 					$title = $link->getAttribute('title');
@@ -136,59 +136,39 @@ class ActionsInvoiceslate
 
 					$this->resprints.= '<span class="classfortooltip badge '.$badgeClass.'" title="'.dol_htmlentities($title, ENT_QUOTES).'" >'.$nbMonth.'</span>';
 				}
-
-
-				return 1;
 			}
 		}
 
 		return 0;
 	}
 
-	/**
-	 * Overloading the doActions function : replacing the parent's function with the one below
-	 *
-	 * @param   array           $parameters     Hook metadatas (context, etc...)
-	 * @param   CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
-	 * @param   string          $action         Current action (if set). Generally create or edit or null
-	 * @param   HookManager     $hookmanager    Hook manager propagated to allow calling another hook
-	 * @return  int                             < 0 on error, 0 on success, 1 to replace standard code
-	 */
-	public function doActions($parameters, &$object, &$action, $hookmanager)
-	{
-		global $conf, $user, $langs, $db;
-//
-//		$error = 0;
-//		$fac = new Facture($db);
-//		$fac->fetch($parameters['socid']);
-//
-//		if ($fac->date_lim_reglement < dol_now('gmt')){
-//				$error++;
-//				print '<div class="alert">
-//						<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>
-//						  Présence de factures impayées pour ce client
-//					   </div>';
-//			}
 
-	}
-
-
-	public function formObjectOptions($parameters, &$object, &$action)
+	public function addMoreBoxStatsCustomer($parameters, &$object, &$action)
 	{
 		global $conf, $user, $langs, $db;
 
-				$error = 0;
-				$fac = new Facture($db);
-				$fac->fetch($parameters['socid']);
+		$contextArray = explode(':',$parameters['context']);
+		$langs->load('invoiceslate@invoiceslate');
 
-				if ($fac->date_lim_reglement < dol_now('gmt')){
-						$error++;
-						print '<div class="alert">
-								<span class="closebtn" onclick="this.parentElement.style.display="none">&times;</span>
-								  Présence de factures impayées pour ce client
-							   </div>';
+		if (in_array('thirdpartycomm', $contextArray ) && !empty($object))
+		{
+			if($object->element == 'societe'){
+				$dataClient = $this->_getDataClient($object->id);
+				if($dataClient) {
+					if($dataClient->total_unpaid>0)
+					{
+						$icon = 'bill';
+						$text = $langs->trans("Unpaid");
+						$boxstat = '<div id="customer-unpaid-boxstats" class="boxstats" data-unpaid="'.$dataClient->total_unpaid.'"  title="'.dol_escape_htmltag($text).'" >';
+						$boxstat .= '<span class="boxstatstext">'.img_object("", $icon).' '.$text.'</span><br>';
+						$boxstat .= '<span class="boxstatsindicator'.($dataClient->total_unpaid > 0 ? ' amountremaintopay' : '').'">'.price($dataClient->total_unpaid, 1, $langs, 1, -1, -1, $conf->currency).'</span>';
+						$boxstat .= '</div>';
+
+						$this->resprints = $boxstat;
 					}
-
+				}
+			}
+		}
 	}
 
 
