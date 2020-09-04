@@ -203,7 +203,7 @@ class ActionsInvoiceslate
 					line.append(\'<div id="invoiceslate-load-container"></div>\');
 
 					$(socId).on("change", function () {
-						var optionValue = $(this).children("option:selected").val();
+						var optionValue = $(this).val();
 						var line = socId.parent();
 						$("#invoiceslate-load-container").load("'.dol_buildpath('comm/card.php',1).'?socid=" + optionValue + " #customer-unpaid-boxstats", function() {
 						  	var unpaidInvoices = $("#customer-unpaid-boxstats").attr("data-unpaid");
