@@ -301,7 +301,7 @@ class ActionsInvoiceslate
 
 		// Last order
 		$customerData->last_order = false;
-		$sql = 'SELECT max(date_valid) as last_order FROM '.MAIN_DB_PREFIX.'commande WHERE fk_statut >= 1 AND fk_soc = '.intval($fk_soc);
+		$sql = 'SELECT max(date_commande) as last_order FROM '.MAIN_DB_PREFIX.'commande WHERE fk_statut >= 1 AND fk_soc = '.intval($fk_soc);
 		$resql = $db->query($sql);
 		if($resql){
 			$obj = $db->fetch_object($resql);
