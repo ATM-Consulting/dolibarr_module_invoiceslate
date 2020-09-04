@@ -29,8 +29,8 @@ InvoiceslateSetup = Configuration du module Invoiceslate
 Settings = Réglages
 InvoiceslateSetupPage = Page de configuration du module Invoiceslate
 INVOICESLATE_ADD_LAST_ORDER_BADGE = Ajouter un indicateur visuel (bagde) sur le nom du tiers pour savoir s'il a commandé récemment.
-InvoiceLateBadgeColorInfo =Infos couleur du badge :<br/> - 0 à 3 mois dernières ventes / bleu<br/>- 3 à 6 dernières ventes / gris<br/>- Plus de 6 mois dernières ventes / rouge<br/><br/>Le chiffre dans le badge correspond au nombres de mois revolu depuis la dernière commande valide.
-INVOICESLATE_ADD_ALERT_UNPAID_INVOICE_CREATION = Ajouter une alerte, lors d'une création de facture, si le client a un retard de réglement d'une précédente facture
+InvoiceLateBadgeColorInfo =Infos couleur du badge :<br/> - 0 à 3 mois dernières ventes / bleu<br/>- 3 à 6 mois dernières ventes / gris<br/>- Plus de 6 mois dernières ventes / rouge<br/><br/>Le chiffre dans le badge correspond au nombre de mois révolus depuis la dernière commande valide.
+INVOICESLATE_ADD_ALERT_UNPAID_INVOICE_CREATION = Ajouter une alerte, lors d'une création de facture, si le client a un retard de règlement d'une précédente facture
 INVOICESLATE_ADD_ALERT_UNPAID_INVOICE_CREATION_HELP = - Création de la facture via la fiche du client : colorisation du nom du client en rouge si présence de factures impayées pour ce client <br /> Affichage d'une pop-up d'alerte avec détail des impayés <hr> - Création de la facture via l'onglet Facturation / Paiement : à la sélection d'un client ayant des factures impayées, un encadré rouge décrivant les détails des impayés, s'affiche sur la page
 
 #

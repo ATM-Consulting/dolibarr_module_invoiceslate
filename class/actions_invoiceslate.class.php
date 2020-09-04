@@ -203,7 +203,7 @@ class ActionsInvoiceslate
 					line.append(\'<div id="invoiceslate-load-container"></div>\');
 
 					$(socId).on("change", function () {
-						var optionValue = $(this).children("option:selected").val();
+						var optionValue = $(this).val();
 						var line = socId.parent();
 						$("#invoiceslate-load-container").load("'.dol_buildpath('comm/card.php',1).'?socid=" + optionValue + " #customer-unpaid-boxstats", function() {
 						  	var unpaidInvoices = $("#customer-unpaid-boxstats").attr("data-unpaid");
@@ -301,7 +301,7 @@ class ActionsInvoiceslate
 
 		// Last order
 		$customerData->last_order = false;
-		$sql = 'SELECT max(date_valid) as last_order FROM '.MAIN_DB_PREFIX.'commande WHERE fk_statut >= 1 AND fk_soc = '.intval($fk_soc);
+		$sql = 'SELECT max(date_commande) as last_order FROM '.MAIN_DB_PREFIX.'commande WHERE fk_statut >= 1 AND fk_soc = '.intval($fk_soc);
 		$resql = $db->query($sql);
 		if($resql){
 			$obj = $db->fetch_object($resql);
