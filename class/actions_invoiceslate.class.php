@@ -91,7 +91,7 @@ class ActionsInvoiceslate
 					if ($dataClient) {
 						// Unpaid
 						if ($dataClient->total_unpaid > 0) {
-							setEventMessage($langs->trans('Unpaid') . ' : ' . price($dataClient->total_unpaid), 'errors');
+							setEventMessage($langs->trans('OutstandingOverdue') . ' : ' . price($dataClient->total_unpaid, '', '', '', -1, -1, $conf->currency), 'errors');
 						}
 					}
 				}
@@ -136,7 +136,7 @@ class ActionsInvoiceslate
 						$style.= 'color: red; font-weight: bold;';
 						$link->setAttribute('style', $style);
 
-						$title.= '<div style="color:red; font-weight: bold;">'. $langs->trans('Unpaid').' : '.price($dataClient->total_unpaid).'</div>';
+						$title.= '<div style="color:red; font-weight: bold;">'. $langs->trans('OutstandingOverdue').' : '.price($dataClient->total_unpaid, '', '', '', -1, -1, $conf->currency).'</div>';
 					}
 
 					// last Order
@@ -159,7 +159,7 @@ class ActionsInvoiceslate
 					$now = new DateTime();
 					$last_order = new DateTime();
 					$last_order->setTimestamp($dataClient->last_order);
-					$interval = $now->diff($last_order);
+					$interval = $now->diff($last_order, true);
 					$nbMonth = intval($interval->format('%r%m'));
 					$badgeClass = "badge-primary";
 					if($nbMonth < -6){
@@ -170,7 +170,7 @@ class ActionsInvoiceslate
 					}
 
 					$title.= '<br/>'.$langs->trans('InvoiceLateBadgeColorInfo');
-					$this->resprints.= '<span style="margin-left:5px;" class="classfortooltip badge badge '.$badgeClass.'" title="'.dol_htmlentities($title, ENT_QUOTES).'" ><small>'.$nbMonth.'</small></span>';
+					$this->resprints.= '<span style="margin-left:5px;" class="classfortooltip badge badge '.$badgeClass.'" title="'.dol_htmlentities($title, ENT_QUOTES).'" ><small>'.$nbMonth.$langs->trans('IndexOfMonthsSinceLastValidCommand').'</small></span>';
 				}
 				return 1;
 			}
@@ -245,7 +245,7 @@ class ActionsInvoiceslate
 
 				if($dataClient) {
 						$icon = 'bill';
-						$text = $langs->trans("Unpaid");
+						$text = $langs->trans("OutstandingOverdue");
 						$boxstat = '<div id="customer-unpaid-boxstats" class="boxstats" data-unpaid="'.$dataClient->total_unpaid.'"  title="'.dol_escape_htmltag($text).'" >';
 						$boxstat .= '<span class="boxstatstext">'.img_object("", $icon).' '.$text.'</span><br>';
 						$boxstat .= '<span class="boxstatsindicator'.($dataClient->total_unpaid > 0 ? ' amountremaintopay' : '').'">'.price($dataClient->total_unpaid, 1, $langs, 1, -1, -1, $conf->currency).'</span>';

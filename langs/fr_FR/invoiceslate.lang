@@ -41,3 +41,5 @@ InvoiceslateAbout = À propos de Invoiceslate
 InvoiceslateAboutPage = Page à propos de Invoiceslate
 
 LastOrder = Dernière commande
+OutstandingOverdue = Encours en retard
+IndexOfMonthsSinceLastValidCommand = m
