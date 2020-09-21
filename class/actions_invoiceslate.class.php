@@ -91,7 +91,7 @@ class ActionsInvoiceslate
 					if ($dataClient) {
 						// Unpaid
 						if ($dataClient->total_unpaid > 0) {
-							setEventMessage($langs->trans('OutstandingOverdue') . ' : ' . price($dataClient->total_unpaid).' €', 'errors');
+							setEventMessage($langs->trans('OutstandingOverdue') . ' : ' . price($dataClient->total_unpaid, '', '', '', -1, -1, $conf->currency), 'errors');
 						}
 					}
 				}
@@ -136,7 +136,7 @@ class ActionsInvoiceslate
 						$style.= 'color: red; font-weight: bold;';
 						$link->setAttribute('style', $style);
 
-						$title.= '<div style="color:red; font-weight: bold;">'. $langs->trans('OutstandingOverdue').' : '.price($dataClient->total_unpaid).'€'.'</div>';
+						$title.= '<div style="color:red; font-weight: bold;">'. $langs->trans('OutstandingOverdue').' : '.price($dataClient->total_unpaid, '', '', '', -1, -1, $conf->currency).'</div>';
 					}
 
 					// last Order
@@ -170,7 +170,7 @@ class ActionsInvoiceslate
 					}
 
 					$title.= '<br/>'.$langs->trans('InvoiceLateBadgeColorInfo');
-					$this->resprints.= '<span style="margin-left:5px;" class="classfortooltip badge badge '.$badgeClass.'" title="'.dol_htmlentities($title, ENT_QUOTES).'" ><small>'.$nbMonth.'m'.'</small></span>';
+					$this->resprints.= '<span style="margin-left:5px;" class="classfortooltip badge badge '.$badgeClass.'" title="'.dol_htmlentities($title, ENT_QUOTES).'" ><small>'.$nbMonth.$langs->trans('IndexOfMonthsSinceLastValidCommand').'</small></span>';
 				}
 				return 1;
 			}
